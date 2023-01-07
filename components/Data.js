@@ -60,7 +60,6 @@ const Data = ({ route, navigation }) => {
         if (!subTotal || isNaN(subTotal)) setSubTotal(0);
         if (id == -1) {
           data.push({
-            amount: 0,
             name: name,
             total: !total ? 0 : Datacalc.denormalizeNumber(total),
             subTotal: !subTotal ? 0 : Datacalc.denormalizeNumber(subTotal),
@@ -75,7 +74,6 @@ const Data = ({ route, navigation }) => {
               text: 'Atualizar',
               onPress: () => {
                 data[id] = {
-                  amount: 0,
                   name: name,
                   total: !total ? 0 : Datacalc.denormalizeNumber(total),
                   subTotal: !subTotal
@@ -259,27 +257,29 @@ const Data = ({ route, navigation }) => {
                 size={global.screenWidth / 16}
                 style={{ flex: 0, marginRight: global.screenWidth / 36 }}
               />
-              <Text
-                numberOfLines={1}
-                style={{
-                  flex: 0,
-                  color: global.highlightColor,
-                  fontSize: global.screenWidth / 22,
-                }}>
-                {item.name}
-              </Text>
-              <Text
-                numberOfLines={1}
-                style={{
-                  flex: 1,
-                  textAlign: 'right',
-                  color: global.placeholderColor,
-                  fontSize: global.screenWidth / 22,
-                  marginLeft: global.screenWidth / 36,
-                }}>
-                R$ {Datacalc.normalizeNumber(item.total)},
-                {item.subTotal < 10 ? '0' + item.subTotal : item.subTotal}
-              </Text>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    flex: 0,
+                    color: global.highlightColor,
+                    fontSize: global.screenWidth / 22,
+                  }}>
+                  {item.name}
+                </Text>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    flex: 1,
+                    textAlign: 'right',
+                    color: global.placeholderColor,
+                    fontSize: global.screenWidth / 22,
+                    marginLeft: global.screenWidth / 36,
+                  }}>
+                  R$ {Datacalc.normalizeNumber(item.total)},
+                  {item.subTotal < 10 ? '0' + item.subTotal : item.subTotal}
+                </Text>
+              </View>
               <TouchableOpacity
                 onPress={() => removeData(index)}
                 style={{

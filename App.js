@@ -10,6 +10,7 @@ import './Globals.js';
 // Importando componentes.
 import Main from './components/Main';
 import Data from './components/Data';
+import Cloud from './components/Cloud';
 
 // Definindo componente.
 const Stack = createStackNavigator();
@@ -24,9 +25,19 @@ const App = () => {
           headerTintColor: global.defaultColor,
           headerStyle: { backgroundColor: global.highlightColor },
           headerLeft: () =>
-            route.name != 'Main' && (
+            route.name == 'Main' ? (
               <TouchableOpacity
-                style={{ marginLeft: global.screenWidth / 42 }}
+                style={{ marginLeft: global.screenWidth / 36 }}
+                onPress={() => navigation.dispatch(StackActions.push('Cloud'))}>
+                <Icon
+                  name="cloud"
+                  size={global.screenWidth / 20}
+                  color={global.defaultColor}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity
+                style={{ marginLeft: global.screenWidth / 36 }}
                 onPress={() => navigation.pop()}>
                 <Icon
                   name="keyboard-backspace"
@@ -36,9 +47,9 @@ const App = () => {
               </TouchableOpacity>
             ),
           headerRight: () => (
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
               <TouchableOpacity
-                style={{ marginRight: global.screenWidth / 42 }}
+                style={{ marginRight: global.screenWidth / 36 }}
                 onPress={() =>
                   navigation.dispatch(StackActions.replace(route.name))
                 }>
@@ -49,7 +60,7 @@ const App = () => {
                 />
               </TouchableOpacity>
               <TouchableOpacity
-                style={{ marginRight: global.screenWidth / 42 }}
+                style={{ marginRight: global.screenWidth / 36 }}
                 onPress={() =>
                   Alert.alert(
                     'Livre de royalties ©',
@@ -81,7 +92,7 @@ const App = () => {
               </TouchableOpacity>
               {route.name == 'Main' && (
                 <TouchableOpacity
-                  style={{ marginRight: global.screenWidth / 42 }}
+                  style={{ marginRight: global.screenWidth / 36 }}
                   onPress={() =>
                     navigation.dispatch(StackActions.push('Data'))
                   }>
@@ -95,8 +106,21 @@ const App = () => {
             </View>
           ),
         })}>
-        <Stack.Screen name="Main" component={Main} />
-        <Stack.Screen name="Data" component={Data} />
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          options={{ title: 'Menu principal' }}
+        />
+        <Stack.Screen
+          name="Data"
+          component={Data}
+          options={{ title: 'Alteração de dados' }}
+        />
+        <Stack.Screen
+          name="Cloud"
+          component={Cloud}
+          options={{ title: 'Banco de dados' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
