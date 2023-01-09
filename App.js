@@ -31,7 +31,7 @@ const App = () => {
                 onPress={() => navigation.dispatch(StackActions.push('Cloud'))}>
                 <Icon
                   name="cloud"
-                  size={global.screenWidth / 20}
+                  size={global.screenWidth / 16}
                   color={global.defaultColor}
                 />
               </TouchableOpacity>
@@ -41,7 +41,7 @@ const App = () => {
                 onPress={() => navigation.pop()}>
                 <Icon
                   name="keyboard-backspace"
-                  size={global.screenWidth / 20}
+                  size={global.screenWidth / 16}
                   color={global.defaultColor}
                 />
               </TouchableOpacity>
@@ -55,7 +55,7 @@ const App = () => {
                 }>
                 <Icon
                   name="cached"
-                  size={global.screenWidth / 20}
+                  size={global.screenWidth / 16}
                   color={global.defaultColor}
                 />
               </TouchableOpacity>
@@ -86,7 +86,7 @@ const App = () => {
                 }>
                 <Icon
                   name="verified-user"
-                  size={global.screenWidth / 20}
+                  size={global.screenWidth / 16}
                   color={global.defaultColor}
                 />
               </TouchableOpacity>
@@ -98,7 +98,7 @@ const App = () => {
                   }>
                   <Icon
                     name="dashboard-customize"
-                    size={global.screenWidth / 20}
+                    size={global.screenWidth / 16}
                     color={global.defaultColor}
                   />
                 </TouchableOpacity>

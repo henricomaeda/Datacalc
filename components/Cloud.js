@@ -43,11 +43,19 @@ const Cloud = ({ navigation }) => {
         if (data.length <= 0)
           Alert.alert(global.name, 'Nenhum dado encontrado.');
         else {
-          SecureStore.setItemAsync('products', JSON.stringify(data));
-          Alert.alert(global.name, 'Dados restaurados com sucesso!');
+          Alert.alert(global.name, 'Você deseja substituir os dados?', [
+            { text: 'Cancelar' },
+            {
+              text: 'Substituir',
+              onPress: () => {
+                SecureStore.setItemAsync('products', JSON.stringify(data));
+                Alert.alert(global.name, 'Dados restaurados com sucesso!');
 
-          navigation.popToTop();
-          navigation.dispatch(StackActions.replace('Main'));
+                navigation.popToTop();
+                navigation.dispatch(StackActions.replace('Main'));
+              },
+            },
+          ]);
         }
       } catch (e) {
         console.error('ERRO: ' + e);
@@ -107,6 +115,7 @@ const Cloud = ({ navigation }) => {
       <TextInput
         style={{
           flex: 1,
+          textAlign: 'justify',
           textAlignVertical: 'top',
           color: global.placeholderColor,
           padding: global.screenWidth / 32,

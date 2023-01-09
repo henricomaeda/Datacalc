@@ -22,9 +22,15 @@ const Main = () => {
       const response = await SecureStore.getItemAsync('products');
       if (response && response.trim().length != 0) _data = JSON.parse(response);
 
-      setData(
-        _data.map((item) => (!item.amount ? { ...item, amount: 0 } : item))
+      const sorted = _data.sort((a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
       );
+
+      const rebuild = sorted.map((item) =>
+        !item.amount ? { ...item, amount: 0 } : item
+      );
+
+      setData(rebuild);
     } catch (e) {
       console.error('ERRO: ' + e);
     }
@@ -54,6 +60,7 @@ const Main = () => {
   };
 
   const resetData = () => {
+    setReceipt(false);
     setData(
       data.map((item) => (item.amount != 0 ? { ...item, amount: 0 } : item))
     );
@@ -96,11 +103,13 @@ const Main = () => {
                 style={[
                   styles.button,
                   {
+                    paddingTop: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
                     borderWidth: 1.2,
                     borderColor: global.highlightColor,
                     marginTop: global.screenWidth / 46.2,
                     backgroundColor: global.defaultColor,
-                    paddingRight: global.screenWidth / 32,
                   },
                 ]}>
                 <Icon
@@ -109,7 +118,7 @@ const Main = () => {
                   size={global.screenWidth / 16}
                   style={{ flex: 0, marginRight: global.screenWidth / 36 }}
                 />
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1, justifyContent: 'center' }}>
                   <Text
                     numberOfLines={1}
                     style={{
@@ -132,22 +141,21 @@ const Main = () => {
                   style={{
                     flex: 0,
                     borderWidth: 1,
-                    alignItems: 'center',
-                    flexDirection: 'row',
-                    marginLeft: global.screenWidth / 36,
                     borderColor: global.highlightColor,
+                    marginLeft: global.screenWidth / 36,
+                    backgroundColor: global.highlightColor,
                     borderRadius: global.screenWidth / 102,
                   }}>
                   <TouchableOpacity
-                    onPress={() => item.amount > 0 && decreaseAmount(index)}
+                    onPress={() => item.amount < 9 && increaseAmount(index)}
                     style={{
-                      padding: global.screenWidth / 90,
+                      padding: global.screenWidth / 120,
                       backgroundColor: global.highlightColor,
                     }}>
                     <Icon
-                      name="remove"
+                      name="add"
                       color={global.defaultColor}
-                      size={global.screenWidth / 16}
+                      size={global.screenWidth / 22}
                     />
                   </TouchableOpacity>
                   <Text
@@ -155,23 +163,23 @@ const Main = () => {
                     style={{
                       textAlign: 'center',
                       color: global.highlightColor,
-                      fontSize: global.screenWidth / 18,
+                      fontSize: global.screenWidth / 26,
                       backgroundColor: global.defaultColor,
-                      paddingLeft: global.screenWidth / 46,
-                      paddingRight: global.screenWidth / 46,
+                      paddingLeft: global.screenWidth / 40,
+                      paddingRight: global.screenWidth / 40,
                     }}>
                     {item.amount}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => item.amount < 100 && increaseAmount(index)}
+                    onPress={() => item.amount > 0 && decreaseAmount(index)}
                     style={{
-                      padding: global.screenWidth / 90,
+                      padding: global.screenWidth / 120,
                       backgroundColor: global.highlightColor,
                     }}>
                     <Icon
-                      name="add"
+                      name="remove"
                       color={global.defaultColor}
-                      size={global.screenWidth / 16}
+                      size={global.screenWidth / 22}
                     />
                   </TouchableOpacity>
                 </View>

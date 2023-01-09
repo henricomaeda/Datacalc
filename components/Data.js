@@ -38,8 +38,15 @@ const Data = ({ route, navigation }) => {
 
   const [data, setData] = useState([]);
   const fetchData = async () => {
+    let _data = [];
     const response = await SecureStore.getItemAsync('products');
-    if (response && response.trim().length != 0) setData(JSON.parse(response));
+    if (response && response.trim().length != 0) _data = JSON.parse(response);
+
+    setData(
+      _data.sort((a, b) =>
+        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+      )
+    );
   };
 
   const doneIt = (saveIt = true) => {
